@@ -8,130 +8,177 @@ using Department.ViewModels;
 
 namespace Department
 {
-    public static class Queries
+    public class Queries
     {
+        private readonly Data _data;
+
+        public Queries() 
+        {
+            _data = new Data();
+        }
+
         // select
-        public static IEnumerable<Teacher> GetTeachers()
+        public IEnumerable<Teacher> GetTeachers()
         {
             var teachers =
-                from Teacher in Data.Teachers
-                select Teacher;
+                from teacher in _data.Teachers
+                select teacher;
 
             return teachers;
         }
         // select
-        public static IEnumerable<Specialty> GetSpecialties()
+        public IEnumerable<Specialty> GetSpecialties()
         {
-            var specialties =
-                from Specialty in Data.Specialties
-                select Specialty;
+            var specialties = _data.Specialties.Select(x => x);
 
             return specialties;
         }
         //select, join
-        public static IEnumerable<SubjectInfoViewModel> GetSubjects()
+        public IEnumerable<SubjectInfoViewModel> GetSubjects()
         {
             var subjects =
-                from Subject in Data.Subjects
-                join Teacher in Data.Teachers on Subject.TeacherId equals Teacher.Id
-                join SubjectToSpecialty in Data.SubjectToSpecialties on Subject.Id equals SubjectToSpecialty.SubjectId
-                join Specialty in Data.Specialties on SubjectToSpecialty.SpecialtyId equals Specialty.Id
-                select new SubjectInfoViewModel() { Subject = Subject, Teacher = Teacher, Specialty = Specialty };
+                from subject in _data.Subjects
+                join teacher in _data.Teachers 
+                    on subject.TeacherId equals teacher.Id
+                join subjectToSpecialty in _data.SubjectToSpecialties 
+                    on subject.Id equals subjectToSpecialty.SubjectId
+                join specialty in _data.Specialties 
+                    on subjectToSpecialty.SpecialtyId equals specialty.Id
+                select new SubjectInfoViewModel()
+                {
+                    Subject = subject, 
+                    Teacher = teacher, 
+                    Specialty = specialty 
+                };
 
             return subjects;
         }
         //select, join
-        //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        // переделать что-то что я уже не помню
-        // убрать TeacherSubjectViewModel?
-        public static IEnumerable<TeacherSubjectViewModel> GetSubjectsAndTeachers()
+        public IEnumerable<TeacherSubjectViewModel> GetSubjectsAndTeachers()
         {
             var subjects =
-                from Subject in Data.Subjects
-                join Teacher in Data.Teachers on Subject.TeacherId equals Teacher.Id
-                select new TeacherSubjectViewModel() { Subject = Subject, Teacher = Teacher };
+                from subject in _data.Subjects
+                join teacher in _data.Teachers 
+                    on subject.TeacherId equals teacher.Id
+                select new TeacherSubjectViewModel() 
+                { 
+                    Subject = subject, 
+                    Teacher = teacher 
+                };
 
             return subjects;
         }
         // select where
-        public static IEnumerable<Subject> SubjectsFor2Course()
+        public IEnumerable<Subject> SubjectsFor2Course()
         {
             var subjects = 
-                from Subject in Data.Subjects
-                where Subject.Course == 2
-                select Subject;
+                from subject in _data.Subjects
+                where subject.Course == 2
+                select subject;
 
             return subjects;
         }
         // starts with
-        public static IEnumerable<Teacher> TeachersNameStartsWithS()
+        public IEnumerable<Teacher> TeachersNameStartsWithS()
         {
             var teachers =
-                from Teacher in Data.Teachers
-                where Teacher.FirstName.StartsWith("S")
-                select Teacher;
+                from teacher in _data.Teachers
+                where teacher.FirstName.StartsWith("S")
+                select teacher;
 
             return teachers;
         }
         // order by 
-        public static IEnumerable<Subject> SubjectsSortedByCourse()
+        public IEnumerable<Subject> SubjectsSortedByCourse()
         {
             var subjects =
-                from Subject in Data.Subjects
-                orderby Subject.Course
-                select Subject;
+                from subject in _data.Subjects
+                orderby subject.Course
+                select subject;
 
             return subjects;
         }
         // OrderByDescending
-        public static IEnumerable<Subject> SubjectsSortedByCourseDescending()
+        public IEnumerable<Subject> SubjectsSortedByCourseDescending()
         {
-            return Data.Subjects.OrderByDescending(x => x.Course);
+            return _data.Subjects.OrderByDescending(x => x.Course);
         }
         // order by, then by
-        public static IEnumerable<Subject> SubjectsSortedByCourseThenByHours()
+        public IEnumerable<Subject> SubjectsSortedByCourseThenByHours()
         {
-            return Data.Subjects.OrderBy(x => x.Course).ThenBy(x => x.Hours);
+            return _data.Subjects.OrderBy(x => x.Course).ThenBy(x => x.Hours);
         }
         // group by
-        public static IEnumerable<IGrouping<int, Subject>> SubjectsGroupedByCourse()
+        public IEnumerable<IGrouping<int, Subject>> SubjectsGroupedByCourse()
         {
-            return Data.Subjects.GroupBy(p => p.Course);
+            return _data.Subjects.GroupBy(p => p.Course);
         }
-        // take while
-        public static IEnumerable<Subject> TakeSubjectsWhile()
+        // where
+        public IEnumerable<Subject> TakeSubjectsWhere()
         {
-            return Data.Subjects.TakeWhile(x => x.Hours >= 3);
+            return _data.Subjects.Where(x => x.Hours >= 3);
         }
         // take
-        public static IEnumerable<Subject> TakeFirst3Subjects()
+        public IEnumerable<Subject> TakeFirst3Subjects()
         {
-            return Data.Subjects.Take(3);
+            return _data.Subjects.Take(3);
         }
         // contains
-        public static IEnumerable<Subject> SubjectContains()
+        public IEnumerable<Subject> SubjectWhereFormOfControl()
         {
-            return Data.Subjects.Where(x => x.FormOfControl.Contains("exam"));
+           return _data.Subjects.Where(x => x.FormOfControl == Models.Enums.FormOfControl.notExam);
         }
         // average
-        public static decimal AverageHours()
+        public decimal AverageHours()
         {
-            return Data.Subjects.Average(x => x.Hours);
+            return _data.Subjects.Average(x => x.Hours);
         }
         // count
-        public static int CountTeachers()
+        public int CountTeachers()
         {
-            return Data.Subjects.Count();
+            return _data.Teachers.Count();
         }
         // sum
-        public static decimal SumHoursFor2Course()
+        public decimal SumHoursFor2Course()
         {
-            return Data.Subjects.Where(x => x.Course == 2).Sum(x => x.Hours);
+            return _data.Subjects.Where(x => x.Course == 2).Sum(x => x.Hours);
         }
-        // reverse
-        public static IEnumerable<Specialty> ReverseMethod()
+        // concat 
+        public IEnumerable<Teacher> GetAllTeachers()
         {
-            return Data.Specialties.AsEnumerable().Reverse();
+            return _data.Teachers.Concat(_data.InvitedTeachers);
+        }
+
+        public string GetNames()
+        {
+            string allteachers = _data.Teachers
+                .Aggregate("Name: ", (teacherNames, teacher)
+                 => teacherNames = teacherNames + teacher.FirstName + ",");
+
+            int LastIndex = allteachers.LastIndexOf(",");
+            allteachers = allteachers.Remove(LastIndex);
+
+            return allteachers;
+        }
+
+        // reverse
+        public IEnumerable<Specialty> ReverseMethod()
+        {
+            return _data.Specialties.AsEnumerable().Reverse();
+        }
+
+        public IEnumerable<TeacherSubjectViewModel> JoinMethod()
+        {
+            var result = _data.Subjects.Join(_data.Teachers,
+                subject => subject.Id,
+                teacher => teacher.Id,
+                (subject, teacher) => new TeacherSubjectViewModel
+                {
+                    Teacher = teacher,
+                    Subject = subject
+                });
+
+            return result;
         }
     }
 }

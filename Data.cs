@@ -4,12 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Department.Models;
+using Department.Models.Enums;
 
 namespace Department
 {
-    internal class Data
+    public class Data
     {
-        public static List<Teacher> Teachers =>
+        public List<Teacher> Teachers =>
             new List<Teacher>
             {
                 new Teacher()
@@ -48,7 +49,25 @@ namespace Department
                 }
             };
 
-        public static List<Specialty> Specialties =>
+        public List<Teacher> InvitedTeachers =>
+            new List<Teacher>
+            {
+                new Teacher()
+                {
+                    Id = 1,
+                    FirstName = "Mark",
+                    LastName = "Markson"
+                },
+
+                new Teacher()
+                {
+                    Id = 2,
+                    FirstName = "Nick",
+                    LastName = "Nicholson"
+                }
+            };
+
+        public List<Specialty> Specialties =>
             new List<Specialty>
             {
                 new Specialty()
@@ -73,7 +92,7 @@ namespace Department
                 }
             };
 
-        public static List<SubjectToSpecialty> SubjectToSpecialties =>
+        public List<SubjectToSpecialty> SubjectToSpecialties =>
             new List<SubjectToSpecialty>
             {
                 new SubjectToSpecialty()
@@ -125,7 +144,7 @@ namespace Department
                 },
             };
 
-        public static List<Subject> Subjects =>
+        public List<Subject> Subjects =>
             new List<Subject>
             {
                 new Subject()
@@ -133,7 +152,7 @@ namespace Department
                     Id = 1,
                     Name = "Higher math",
                     TeacherId = 1,
-                    FormOfControl = "exam",
+                    FormOfControl = FormOfControl.Exam,
                     Hours = 7,
                     Course = 2
                 },
@@ -142,7 +161,7 @@ namespace Department
                     Id = 2,
                     Name = "Physics",
                     TeacherId = 2,
-                    FormOfControl = "not exam",
+                    FormOfControl = FormOfControl.notExam,
                     Hours = 3,
                     Course = 1
                 },
@@ -151,7 +170,7 @@ namespace Department
                     Id = 3,
                     Name = "Logic",
                     TeacherId = 3,
-                    FormOfControl = "not exam",
+                    FormOfControl = FormOfControl.notExam,
                     Hours = 1,
                     Course = 3
                 },
@@ -160,7 +179,7 @@ namespace Department
                     Id = 4,
                     Name = ".net",
                     TeacherId = 4,
-                    FormOfControl = "not exam",
+                    FormOfControl = FormOfControl.notExam,
                     Hours = 5,
                     Course = 2
                 },
@@ -169,7 +188,7 @@ namespace Department
                     Id = 5,
                     Name = "Web",
                     TeacherId = 5,
-                    FormOfControl = "exam",
+                    FormOfControl = FormOfControl.Exam,
                     Hours = 7,
                     Course = 2
                 },
@@ -178,7 +197,7 @@ namespace Department
                     Id = 6,
                     Name = "Databases",
                     TeacherId = 5,
-                    FormOfControl = "exam",
+                    FormOfControl = FormOfControl.Exam,
                     Hours = 4,
                     Course = 1
                 }

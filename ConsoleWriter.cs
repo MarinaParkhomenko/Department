@@ -8,9 +8,9 @@ using Department.ViewModels;
 
 namespace Department
 {
-    public static class ConsoleWriter
+    public class ConsoleWriter
     {
-        public static void GetTeachers(IEnumerable<Teacher> list)
+        public void GetTeachers(IEnumerable<Teacher> list)
         {
             foreach (Teacher teacher in list)
             {
@@ -19,7 +19,7 @@ namespace Department
             }
         }
 
-        public static void GetSpecialties(IEnumerable<Specialty> list)
+        public void GetSpecialties(IEnumerable<Specialty> list)
         {
             foreach (Specialty specialty in list)
             {
@@ -28,7 +28,7 @@ namespace Department
             }
         }
 
-        public static void GetSubjects(IEnumerable<SubjectInfoViewModel> list)
+        public void GetSubjects(IEnumerable<SubjectInfoViewModel> list)
         {
             foreach(SubjectInfoViewModel subject in list)
             {
@@ -42,7 +42,7 @@ namespace Department
             }
         }
 
-        public static void GetSubjectsAndTeachers(IEnumerable<TeacherSubjectViewModel> list)
+        public void GetSubjectsAndTeachers(IEnumerable<TeacherSubjectViewModel> list)
         {
             foreach (TeacherSubjectViewModel subject in list)
             {
@@ -53,7 +53,7 @@ namespace Department
             }
         }
 
-        public static void SubjectsFor2Course(IEnumerable<Subject> list)
+        public void SubjectsFor2Course(IEnumerable<Subject> list)
         {
             foreach(Subject subject in list)
             {
@@ -64,7 +64,7 @@ namespace Department
             }
         }
 
-        public static void TeachersNameStartsWithS(IEnumerable<Teacher> list)
+        public void TeachersNameStartsWithS(IEnumerable<Teacher> list)
         {
             foreach(Teacher teacher in list)
             {
@@ -73,7 +73,7 @@ namespace Department
             }
         }
 
-        public static void SubjectsSortedByCourse(IEnumerable<Subject> list)
+        public void SubjectsSortedByCourse(IEnumerable<Subject> list)
         {
             foreach (Subject subject in list)
             {
@@ -85,7 +85,7 @@ namespace Department
             }
         }
 
-        public static void SubjectsSortedByCourseDescending(IEnumerable<Subject> list)
+        public void SubjectsSortedByCourseDescending(IEnumerable<Subject> list)
         {
             foreach (Subject subject in list)
             {
@@ -97,7 +97,7 @@ namespace Department
             }
         }
 
-        public static void SubjectsSortedByCourseThenByHours(IEnumerable<Subject> list)
+        public void SubjectsSortedByCourseThenByHours(IEnumerable<Subject> list)
         {
             foreach (Subject subject in list)
             {
@@ -109,7 +109,7 @@ namespace Department
             }
         }
 
-        public static void SubjectsGroupedByCourse(IEnumerable<IGrouping<int, Subject>> list)
+        public void SubjectsGroupedByCourse(IEnumerable<IGrouping<int, Subject>> list)
         {
             foreach(var group in list)
             {
@@ -126,7 +126,7 @@ namespace Department
             }
         }
 
-        public static void TakeSubjectsWhile(IEnumerable<Subject> list)
+        public void TakeSubjectsWhere(IEnumerable<Subject> list)
         {
             foreach(Subject subject in list)
             {
@@ -136,7 +136,7 @@ namespace Department
             }
         }
 
-        public static void TakeFirst3Subjects(IEnumerable<Subject> list)
+        public void TakeFirst3Subjects(IEnumerable<Subject> list)
         {
             foreach (Subject subject in list)
             {
@@ -145,7 +145,7 @@ namespace Department
             }
         }
 
-        public static void SubjectContains(IEnumerable<Subject> list)
+        public void SubjectWhereFormOfControl(IEnumerable<Subject> list)
         {
             foreach (Subject subject in list)
             {
@@ -155,30 +155,55 @@ namespace Department
             }
         }
 
-        public static void AverageHours(decimal hours)
+        public void AverageHours(decimal hours)
         {
             Console.WriteLine("Average hours: " + hours);
             Console.WriteLine();
         }
 
-        public static void CountTeachers(int count)
+        public void CountTeachers(int count)
         {
             Console.WriteLine("Teachers: " + count);
             Console.WriteLine();
         }
 
-        public static void SumHoursFor2Course(decimal hours)
+        public void SumHoursFor2Course(decimal hours)
         {
             Console.WriteLine("Course: 2");
             Console.WriteLine("Total hours: " + hours);
             Console.WriteLine();
         }
 
-        public static void ReverseMethod(IEnumerable<Specialty> list)
+        public void GetAllTeachers(IEnumerable<Teacher> list)
+        {
+            foreach (Teacher teacher in list)
+            {
+                Console.WriteLine(teacher.Id + ". " + teacher.FirstName + " " + teacher.LastName);
+                Console.WriteLine();
+            }
+        }
+
+        public void GetNames(string str)
+        {
+            Console.WriteLine(str);
+            Console.WriteLine();
+        }
+
+        public void ReverseMethod(IEnumerable<Specialty> list)
         {
             foreach(Specialty specialty in list)
             {
                 Console.WriteLine(specialty.Id + ". " + specialty.Code + " " + specialty.Name);
+                Console.WriteLine();
+            }
+        }
+
+        public void JoinMethod(IEnumerable<TeacherSubjectViewModel> list)
+        {
+            foreach (TeacherSubjectViewModel subject in list)
+            {
+                Console.WriteLine(subject.Subject.Id + ". " + subject.Subject.Name);
+                Console.WriteLine(subject.Teacher.FirstName + " " + subject.Teacher.LastName);
                 Console.WriteLine();
             }
         }
