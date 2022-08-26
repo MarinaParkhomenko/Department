@@ -109,14 +109,13 @@ namespace Department
             }
         }
 
-        public void SubjectsGroupedByCourse(IEnumerable<IGrouping<int, Subject>> list)
+        public void SubjectsGroupedByCourse(Dictionary<int, IEnumerable<Subject>> list)
         {
             foreach(var group in list)
             {
-                var groupkey = group.Key;
-                Console.WriteLine("Course: " + groupkey);
+                Console.WriteLine("Course: " + group.Key);
 
-                foreach (var subject in group)
+                foreach (var subject in group.Value)
                 {
                     Console.WriteLine(subject.Id + ". " + subject.Name);
                     Console.WriteLine(subject.FormOfControl);

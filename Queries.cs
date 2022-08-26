@@ -109,9 +109,11 @@ namespace Department
             return _data.Subjects.OrderBy(x => x.Course).ThenBy(x => x.Hours);
         }
         // group by
-        public IEnumerable<IGrouping<int, Subject>> SubjectsGroupedByCourse()
+        public Dictionary<int, IEnumerable<Subject>> SubjectsGroupedByCourse()
         {
-            return _data.Subjects.GroupBy(p => p.Course);
+            var subjects = _data.Subjects.GroupBy(p => p.Course);
+
+            return subjects.ToDictionary(i => i.Key, j => j.Select(a => a));
         }
         // where
         public IEnumerable<Subject> TakeSubjectsWhere()
